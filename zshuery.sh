@@ -1,3 +1,5 @@
+# jQuery did this for JS, we're doing it for zsh
+
 # Settings
 load_defaults() {
     setopt auto_name_dirs
@@ -12,12 +14,27 @@ load_defaults() {
     zle -N self-insert url-quote-magic
     autoload -U zmv
     bindkey "^[m" copy-prev-shell-word
+    HISTFILE=$HOME/.zsh_history
+    HISTSIZE=10000
+    SAVEHIST=10000
+    setopt hist_ignore_dups
+    setopt share_history
+    setopt append_history
+    setopt hist_verify
+    setopt inc_append_history
+    setopt extended_history
+    setopt hist_expire_dups_first
+    setopt hist_ignore_space
 }
-source /etc/zsh_command_not_found # installed in Ubuntu
 
-# Shortcuts
-mcd() { mkdir -p "$1" && cd "$1"; }
-cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
+# Plug and play
+source /etc/zsh_command_not_found # installed in Ubuntu
+if [[ -x `which hub` ]]; then
+    eval $(hub alias -s zsh)
+fi
+if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
+    export PATH=$PATH:/var/lib/gems/1.8/bin
+fi
 
 # Functions
 prompt_char() { # by Steve Losh
@@ -34,7 +51,7 @@ ex() {
           *.tar.bz2) tar xvjf $1;;
           *.tar.gz) tar xvzf $1;;
           *.tar.xz) tar xvJf $1;;
-          *.tar.lzma) tar --lzma -xvf $1;;
+          *.tar.lzma) tar --lzma xvf $1;;
           *.bz2) bunzip $1;;
           *.rar) unrar $1;;
           *.gz) gunzip $1;;
@@ -51,6 +68,8 @@ ex() {
         echo "'$1' is not a valid file"
     fi
 }
+mcd() { mkdir -p "$1" && cd "$1"; }
+cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
 pman() { man $1 -t | open -f -a Preview }
 pj() { python -mjson.tool }
 cj() { curl -sS $@ | pj }
@@ -108,7 +127,7 @@ _cap() {
     compadd `cat .cap_tasks~`
   fi
 }
-load_completion() {
+load_completion() { # thanks to Oh My Zsh and the internets
     autoload -U compinit
     fpath=(./completion $fpath)
     fignore=(DS_Store $fignore)
@@ -128,4 +147,6 @@ load_completion() {
     zstyle ':completion::complete:*' cache-path ./cache/
     zstyle ':completion:*:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
     zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG):ogg\ files *(-/):directories'
+    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+    zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
 }
