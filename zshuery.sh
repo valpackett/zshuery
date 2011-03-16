@@ -54,12 +54,15 @@ ex() {
 pman() { man $1 -t | open -f -a Preview }
 pj() { python -mjson.tool }
 cj() { curl -sS $@ | pj }
+md5(){ echo -n $1 | openssl md5 /dev/stdin }
+sha1(){ echo -n $1 | openssl sha1 /dev/stdin }
 
 # Aliases
 load_aliases() {
     alias ..='cd ..'
     alias oo='open .'
     alias ql='qlmanage -p 2>/dev/null'
+    alias clr='clear'
     alias s_http='python -m SimpleHTTPServer'
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025'
     alias wget='wget --no-check-certificate'
