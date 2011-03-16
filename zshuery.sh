@@ -85,6 +85,7 @@ load_aliases() {
     alias s_http='python -m SimpleHTTPServer'
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025'
     alias wget='wget --no-check-certificate'
+    alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info'
 }
 load_lol_aliases() {
     # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh
