@@ -64,6 +64,26 @@ load_aliases() {
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025'
     alias wget='wget --no-check-certificate'
 }
+load_lol_aliases() {
+    # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh
+    alias wtf='dmesg'
+    alias onoz='cat /var/log/errors.log'
+    alias rtfm='man'
+    alias visible='echo'
+    alias invisible='cat'
+    alias moar='more'
+    alias icanhas='mkdir'
+    alias donotwant='rm'
+    alias dowant='cp'
+    alias gtfo='mv'
+    alias hai='cd'
+    alias plz='pwd'
+    alias inur='locate'
+    alias nomz='ps aux | less'
+    alias nomnom='killall'
+    alias cya='reboot'
+    alias kthxbai='halt'
+}
 
 # Completion
 _fab() { reply=(`fab --shortlist`) }
