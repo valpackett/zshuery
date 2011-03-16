@@ -2,19 +2,22 @@
 
 # Checks
 if [[ $(uname) = 'Linux' ]]; then
-    IS_LINUX = 1
+    IS_LINUX=1
 fi
 if [[ $(uname) = 'Darwin' ]]; then
-    IS_MAC = 1
+    IS_MAC=1
 fi
-if [ -x `which brew` ]; then
-    HAS_BREW = 1
+which -s brew >& /dev/null
+if [ $? -eq 0 ]; then
+    HAS_BREW=1
 fi
-if [ -x `which apt-get` ]; then
-    HAS_APT = 1
+which -s apt-get >& /dev/null
+if [ $? -eq 0 ]; then
+    HAS_APT=1
 fi
-if [ -x `which yum` ]; then
-    HAS_YUM = 1
+which -s yum >& /dev/null
+if [ $? -eq 0 ]; then
+    HAS_YUM=1
 fi
 
 # Settings
@@ -45,7 +48,9 @@ load_defaults() {
 }
 
 # Plug and play
-source /etc/zsh_command_not_found # installed in Ubuntu
+if [ -f /etc/zsh_command_not_found ]; then
+    source /etc/zsh_command_not_found # installed in Ubuntu
+fi
 if [ -x `which hub` ]; then
     eval $(hub alias -s zsh)
 fi
@@ -106,6 +111,7 @@ load_aliases() {
     if [ IS_MAC ]; then
         alias oo='open .' # open current dir in OS X Finder
     fi
+    alias la='ls -la'
     alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
     alias clr='clear'
     alias s_http='python -m SimpleHTTPServer' # serve current folder via HTTP
