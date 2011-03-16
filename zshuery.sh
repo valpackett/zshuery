@@ -78,7 +78,7 @@ ex() {
           *.zip) unzip $1;;
           *.Z) uncompress $1;;
           *.7z) 7z x $1;;
-          *.dmg) hdiutul mount $1;;
+          *.dmg) hdiutul mount $1;; # mount OS X disk images
           *) echo "'$1' cannot be extracted via >ex<";;
     esac
     else
@@ -87,9 +87,9 @@ ex() {
 }
 mcd() { mkdir -p "$1" && cd "$1"; }
 cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
-pman() { man $1 -t | open -f -a Preview }
-pj() { python -mjson.tool }
-cj() { curl -sS $@ | pj }
+pman() { man $1 -t | open -f -a Preview } # open man pages in OS X Preview
+pj() { python -mjson.tool } # pretty-print JSON
+cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
 sha1() { echo -n $1 | openssl sha1 /dev/stdin }
 if [ HAS_BREW ]; then
@@ -103,13 +103,15 @@ fi
 # Aliases
 load_aliases() {
     alias ..='cd ..'
-    alias oo='open .'
-    alias ql='qlmanage -p 2>/dev/null'
+    if [ IS_MAC ]; then
+        alias oo='open .' # open current dir in OS X Finder
+    fi
+    alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
     alias clr='clear'
-    alias s_http='python -m SimpleHTTPServer'
-    alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025'
+    alias s_http='python -m SimpleHTTPServer' # serve current folder via HTTP
+    alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025' # SMTP test server, outputs to console
     alias wget='wget --no-check-certificate'
-    alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info'
+    alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info' # install a Python package
 }
 load_lol_aliases() {
     # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh
@@ -155,7 +157,7 @@ _cap() {
 load_completion() { # thanks to Oh My Zsh and the internets
     autoload -U compinit
     fpath=(./completion $fpath)
-    fignore=(DS_Store $fignore)
+    fignore=(.DS_Store $fignore)
     compinit -i
     zmodload -i zsh/complist
     setopt complete_in_word
