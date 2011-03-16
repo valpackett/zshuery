@@ -1,5 +1,22 @@
 # jQuery did this for JS, we're doing it for zsh
 
+# Checks
+if [[ $(uname) = 'Linux' ]]; then
+    IS_LINUX = 1
+fi
+if [[ $(uname) = 'Darwin' ]]; then
+    IS_MAC = 1
+fi
+if [ -x `which brew` ]; then
+    HAS_BREW = 1
+fi
+if [ -x `which apt-get` ]; then
+    HAS_APT = 1
+fi
+if [ -x `which yum` ]; then
+    HAS_YUM = 1
+fi
+
 # Settings
 load_defaults() {
     setopt auto_name_dirs
@@ -29,10 +46,10 @@ load_defaults() {
 
 # Plug and play
 source /etc/zsh_command_not_found # installed in Ubuntu
-if [[ -x `which hub` ]]; then
+if [ -x `which hub` ]; then
     eval $(hub alias -s zsh)
 fi
-if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
+if [ -d /var/lib/gems/1.8/bin ]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
 
@@ -73,8 +90,15 @@ cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of t
 pman() { man $1 -t | open -f -a Preview }
 pj() { python -mjson.tool }
 cj() { curl -sS $@ | pj }
-md5(){ echo -n $1 | openssl md5 /dev/stdin }
-sha1(){ echo -n $1 | openssl sha1 /dev/stdin }
+md5() { echo -n $1 | openssl md5 /dev/stdin }
+sha1() { echo -n $1 | openssl sha1 /dev/stdin }
+if [ HAS_BREW ]; then
+    gimme() { brew install $1 }
+elif [ HAS_APT ]; then
+    gimme() { sudo apt-get install $1 }
+elif [ HAS_YUM ]; then
+    gimme() { su -c 'yum install $1' }
+fi
 
 # Aliases
 load_aliases() {
