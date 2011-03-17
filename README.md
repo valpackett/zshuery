@@ -1,6 +1,9 @@
 # zshuery #
 jQuery did this for JS, we're doing it for zsh. Simplest zsh configuration framework ever. Based on the "Explicit is better than implicit" paradigm (?) from the Zen of Python, so (almost) nothing gets loaded when you source the file.
 
+## What's wrong with [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)? ##
+It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've got tired of it and made my own framework. You're looking at it now :)
+
 ## What's inside? ##
 
 - Checks: variables IS_MAC, IS_LINUX, HAS_BREW, HAS_APT, HAS_YUM for your if statements
