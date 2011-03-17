@@ -21,6 +21,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Settings
+autoload colors; colors;
 load_defaults() {
     setopt auto_name_dirs
     setopt auto_pushd
@@ -58,7 +59,13 @@ if [ -d /var/lib/gems/1.8/bin ]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
 
+# Prompt aliases for readability
+USERNAME='%n'
+HOSTNAME='%m'
+DIR='%~'
+
 # Functions
+prompt() { PS1=$1 }
 prompt_char() { # by Steve Losh
     git branch >/dev/null 2>/dev/null && echo '±' && return
     hg root >/dev/null 2>/dev/null && echo '☿' && return
@@ -97,20 +104,18 @@ pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
 sha1() { echo -n $1 | openssl sha1 /dev/stdin }
-if [ HAS_BREW ]; then
+if [ HAS_BREW = 1 ]; then
     gimme() { brew install $1 }
-elif [ HAS_APT ]; then
+elif [ HAS_APT = 1 ]; then
     gimme() { sudo apt-get install $1 }
-elif [ HAS_YUM ]; then
+elif [ HAS_YUM = 1 ]; then
     gimme() { su -c 'yum install $1' }
 fi
 
 # Aliases
 load_aliases() {
     alias ..='cd ..'
-    if [ IS_MAC ]; then
-        alias oo='open .' # open current dir in OS X Finder
-    fi
+    alias oo='open .' # open current dir in OS X Finder
     alias la='ls -la'
     alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
     alias clr='clear'

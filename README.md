@@ -1,0 +1,42 @@
+# zshuery #
+jQuery did this for JS, we're doing it for zsh. Simplest zsh configuration framework ever. Based on the "Explicit is better than implicit" paradigm (?) from the Zen of Python, so (almost) nothing gets loaded when you source the file.
+
+## What's inside? ##
+
+- Checks: variables IS_MAC, IS_LINUX, HAS_BREW, HAS_APT, HAS_YUM for your if statements
+- Some common defaults
+- Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu
+- Prompt setting aliases (for better readability) and "prompt" command which just sets the PS1
+- Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise)
+- Smart ass functions (listed below)
+- Aliases, including [LOLSPEAK](http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh) ones (loaded separately)
+- Completion for a lot of stuff
+- Correction
+
+### Functions ###
+
+- `ex` extract archives
+- `mcd` mkdir + cd
+- `cdf` cd to the current path of the frontmost OS X Finder window
+- `pman` open man pages in OS X Preview
+- `pj` pretty-print JSON
+- `cj` curl and pretty-print JSON
+- `md5`, `sha1` of a string
+- `gimme` install packages ([Homebrew](http://mxcl.github.com/homebrew/) on Mac OS X, apt/yum on Linux)
+
+## Example zshrc ##
+    source /your/dotfiles/zshuery/zshuery.sh
+    load_defaults
+    load_aliases
+    load_lol_aliases
+    load_completion
+    load_correction
+
+    prompt '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '
+
+    if [ IS_LINUX = 1 ]; then
+        export EDITOR='emacsclient'
+        export ALTERNATE_EDITOR='emacs'
+    elif [ IS_MAC = 1 ]; then
+        export EDITOR='aquamacs'
+    fi
