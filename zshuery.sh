@@ -173,7 +173,7 @@ load_completion() { # thanks to Oh My Zsh and the internets
     zmodload -i zsh/complist
     setopt complete_in_word
     unsetopt always_to_end
-    compctl -K _fab_list fab
+    compctl -K _fab fab
     compctl -K _cap cap
     [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
     [ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
