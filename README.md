@@ -18,6 +18,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 
 ### Functions ###
 
+- `last_modified` pretty self-explanatory
 - `ex` extract archives
 - `mcd` mkdir + cd
 - `cdf` cd to the current path of the frontmost OS X Finder window
@@ -32,7 +33,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
     load_defaults
     load_aliases
     load_lol_aliases
-    load_completion
+    load_completion /your/dotfiles/zshuery/completion
     load_correction
 
     prompt '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '

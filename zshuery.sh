@@ -63,6 +63,9 @@ fi
 USERNAME='%n'
 HOSTNAME='%m'
 DIR='%~'
+COLLAPSED_DIR() { # by Steve Losh
+    echo $(pwd | sed -e "s,^$HOME,~,")
+}
 
 # Functions
 prompt() { PS1=$1 }
@@ -73,6 +76,9 @@ prompt_char() { # by Steve Losh
 }
 virtualenv_info() {
     [ $VIRTUAL_ENV ] && echo ' ('`basename $VIRTUAL_ENV`')'
+}
+last_modified() { # by Ryan Bates
+    ls -t $* 2> /dev/null | head -n 1
 }
 ex() {
     if [[ -f $1 ]]; then
@@ -167,7 +173,7 @@ _cap() {
 }
 load_completion() { # thanks to Oh My Zsh and the internets
     autoload -U compinit
-    fpath=(./completion $fpath)
+    fpath=($* $fpath)
     fignore=(.DS_Store $fignore)
     compinit -i
     zmodload -i zsh/complist
