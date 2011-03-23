@@ -153,6 +153,7 @@ load_lol_aliases() {
 
 # Completion
 _fab() { reply=(`fab --shortlist`) }
+_teamocil() { reply=(`ls ~/.teamocil | sed 's/.yml//'`) }
 _cap_does_task_list_need_generating() {
   if [ ! -f .cap_tasks~ ]; then return 0;
   else
@@ -180,6 +181,7 @@ load_completion() { # thanks to Oh My Zsh and the internets
     setopt complete_in_word
     unsetopt always_to_end
     compctl -K _fab fab
+    compctl -K _teamocil teamocil
     compctl -K _cap cap
     [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
     [ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
