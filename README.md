@@ -38,9 +38,9 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 
     prompt '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '
 
-    if [ IS_LINUX = 1 ]; then
+    if [ $IS_LINUX -eq 1 ]; then
         export EDITOR='emacsclient'
         export ALTERNATE_EDITOR='emacs'
-    elif [ IS_MAC = 1 ]; then
+    elif [ $IS_MAC -eq 1 ]; then
         export EDITOR='aquamacs'
     fi
