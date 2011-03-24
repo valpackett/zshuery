@@ -217,5 +217,6 @@ load_correction() {
     alias make='nocorrect make'
     alias cake='nocorrect cake'
     alias lessc='nocorrect lessc'
+    alias lunchy='nocorrect lunchy'
     SPROMPT="$fg[red]%R →$reset_color $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
 }
