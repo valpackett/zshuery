@@ -8,8 +8,8 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 
 - Checks: variables IS_MAC, IS_LINUX, HAS_BREW, HAS_APT, HAS_YUM for your if statements
 - Some common defaults
-- Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu
-- Prompt setting aliases (for better readability) and "prompt" command which just sets the PS1
+- Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, rvm
+- Prompt setting aliases (for better readability) and "prompts" command which just sets both left and right prompts
 - Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise)
 - Smart ass functions (listed below)
 - Aliases, including [LOLSPEAK](http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh) ones (loaded separately)
@@ -36,7 +36,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
     load_completion /your/dotfiles/zshuery/completion
     load_correction
 
-    prompt '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '
+    prompts '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '
 
     if [ $IS_LINUX -eq 1 ]; then
         export EDITOR='emacsclient'

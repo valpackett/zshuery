@@ -58,6 +58,19 @@ fi
 if [ -d /var/lib/gems/1.8/bin ]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
+if [ -s $HOME/.rvm/scripts/rvm ]; then
+    source $HOME/.rvm/scripts/rvm
+    RUBY_VERSION_PREFIX='r'
+    ruby_version() {
+        echo $RUBY_VERSION_PREFIX$(rvm info | grep version | \
+        grep -v bash | grep -v zsh | grep -v rvm | grep -v full_ | \
+        sed 's/^.*version:[ ]*//' | sed 's/["]//g')
+    }
+else
+    ruby_version() {
+        echo ''
+    }
+fi
 
 # Prompt aliases for readability
 USERNAME='%n'
@@ -68,7 +81,10 @@ COLLAPSED_DIR() { # by Steve Losh
 }
 
 # Functions
-prompt() { PS1=$1 }
+prompts() {
+    PROMPT=$1
+    RPROMPT=$2
+}
 prompt_char() { # by Steve Losh
     git branch >/dev/null 2>/dev/null && echo '±' && return
     hg root >/dev/null 2>/dev/null && echo '☿' && return
