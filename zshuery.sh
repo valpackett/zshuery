@@ -7,16 +7,13 @@ fi
 if [[ $(uname) = 'Darwin' ]]; then
     IS_MAC=1
 fi
-which -s brew >& /dev/null
-if [ $? -eq 0 ]; then
+if [[ -x `which brew` ]]; then
     HAS_BREW=1
 fi
-which -s apt-get >& /dev/null
-if [ $? -eq 0 ]; then
+if [[ -x `which apt-get` ]]; then
     HAS_APT=1
 fi
-which -s yum >& /dev/null
-if [ $? -eq 0 ]; then
+if [[ -x `which yum` ]]; then
     HAS_YUM=1
 fi
 
@@ -126,12 +123,12 @@ pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
 sha1() { echo -n $1 | openssl sha1 /dev/stdin }
-if [ $HAS_BREW -eq 1 ]; then
+if [[ $HAS_BREW -eq 1 ]]; then
     gimme() { brew install $1 }
     _gimme() { reply=(`brew search`) }
-elif [ $HAS_APT -eq 1 ]; then
+elif [[ $HAS_APT -eq 1 ]]; then
     gimme() { sudo apt-get install $1 }
-elif [ $HAS_YUM -eq 1 ]; then
+elif [[ $HAS_YUM -eq 1 ]]; then
     gimme() { su -c 'yum install $1' }
 fi
 
@@ -203,7 +200,7 @@ load_completion() { # thanks to Oh My Zsh and the internets
     compctl -K _fab fab
     compctl -K _teamocil teamocil
     compctl -K _cap cap
-    if [ $HAS_BREW -eq 1 ]; then
+    if [[ $HAS_BREW -eq 1 ]]; then
         compctl -K _gimme gimme
     fi
     [ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()

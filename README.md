@@ -10,13 +10,13 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 - Some common defaults
 - Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, rvm
 - Prompt setting aliases (for better readability) and "prompts" command which just sets both left and right prompts
-- Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise)
+- Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise), rvm ruby version
 - Smart ass functions (listed below)
 - Aliases, including [LOLSPEAK](http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh) ones (loaded separately)
 - Completion for a lot of stuff
 - Correction
 
-### Functions ###
+### Functions & aliases ###
 
 - `last_modified` pretty self-explanatory
 - `ex` extract archives
@@ -27,6 +27,12 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 - `cj` curl and pretty-print JSON
 - `md5`, `sha1` of a string
 - `gimme` install packages ([Homebrew](http://mxcl.github.com/homebrew/) on Mac OS X, apt/yum on Linux)
+- `pinst` install python package from current dir and remove build, dist and egg-info folders
+- `ql` open something in Mac OS X Quick Look
+- `oo` open current dir in Mac OS X Finder
+- `s_http` serve current folder via http
+- `s_smtp` launch an SMTP test server for development
+- `gho` open the git repo you're currently in on github, requires the github gem
 
 ## Example zshrc ##
     source /your/dotfiles/zshuery/zshuery.sh
@@ -36,7 +42,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
     load_completion /your/dotfiles/zshuery/completion
     load_correction
 
-    prompts '%{$fg_bold[green]%}$DIR%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} '
+    prompts '%{$fg_bold[green]%}$(COLLAPSED_DIR)%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} ' '%{$fg[red]%}$(ruby_version)%{$reset_color%}'
 
     if [ $IS_LINUX -eq 1 ]; then
         export EDITOR='emacsclient'
