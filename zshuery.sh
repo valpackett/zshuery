@@ -59,14 +59,12 @@ if [ -s $HOME/.rvm/scripts/rvm ]; then
     source $HOME/.rvm/scripts/rvm
     RUBY_VERSION_PREFIX='r'
     ruby_version() {
-        echo $RUBY_VERSION_PREFIX$(rvm info | grep version | \
-        grep -v bash | grep -v zsh | grep -v rvm | grep -v full_ | \
-        sed 's/^.*version:[ ]*//' | sed 's/["]//g')
+        if [[ $RUBY_VERSION != "" ]]; then
+            echo $RUBY_VERSION_PREFIX$RUBY_VERSION | sed s/ruby-//
+        else echo ''; fi
     }
 else
-    ruby_version() {
-        echo ''
-    }
+    ruby_version() { echo '' }
 fi
 
 # Prompt aliases for readability
