@@ -144,6 +144,7 @@ load_aliases() {
     if [ -e `which github` ]; then
         alias gho="github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'`"
     fi
+    alias beep='echo -n "\a"'
 }
 load_lol_aliases() {
     # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh
