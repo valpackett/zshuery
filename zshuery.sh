@@ -129,6 +129,9 @@ elif [[ $HAS_APT -eq 1 ]]; then
 elif [[ $HAS_YUM -eq 1 ]]; then
     gimme() { su -c 'yum install $1' }
 fi
+if [ -e `which github` ]; then
+    gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
+fi
 
 # Aliases
 load_aliases() {
@@ -141,9 +144,6 @@ load_aliases() {
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025' # SMTP test server, outputs to console
     alias wget='wget --no-check-certificate'
     alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info' # install a Python package
-    if [ -e `which github` ]; then
-        alias gho="github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'`"
-    fi
     alias beep='echo -n "\a"'
 }
 load_lol_aliases() {
