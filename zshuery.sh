@@ -115,7 +115,6 @@ ex() {
     fi
 }
 mcd() { mkdir -p "$1" && cd "$1"; }
-cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
 pman() { man $1 -t | open -f -a Preview } # open man pages in OS X Preview
 pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
@@ -129,6 +128,14 @@ elif [[ $HAS_APT -eq 1 ]]; then
 elif [[ $HAS_YUM -eq 1 ]]; then
     gimme() { su -c 'yum install $1' }
 fi
+if [[ $IS_MAC -eq 1 ]]; then
+    cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
+    vol() {
+        if [[ -n $1 ]]; then osascript -e "set volume output volume $1"
+        else osascript -e "output volume of (get volume settings)"
+        fi
+    }
+ fi
 if [ -e `which github` ]; then
     gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
 fi

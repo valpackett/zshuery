@@ -33,6 +33,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 - `s_http` serve current folder via http
 - `s_smtp` launch an SMTP test server for development
 - `gho` open the git repo you're currently in on github, requires the github gem
+- `vol` get/set Mac OS X sound volume
 
 ## Example zshrc ##
     source /your/dotfiles/zshuery/zshuery.sh
