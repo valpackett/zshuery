@@ -135,6 +135,7 @@ if [[ $IS_MAC -eq 1 ]]; then
         else osascript -e "output volume of (get volume settings)"
         fi
     }
+    locatemd() { mdfind "kMDItemDisplayName == '$@'wc" }
  fi
 if [ -e `which github` ]; then
     gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
@@ -152,6 +153,7 @@ load_aliases() {
     alias wget='wget --no-check-certificate'
     alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info' # install a Python package
     alias beep='echo -n "\a"'
+    alias lst="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 }
 load_lol_aliases() {
     # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh

@@ -34,6 +34,8 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 - `s_smtp` launch an SMTP test server for development
 - `gho` open the git repo you're currently in on github, requires the github gem
 - `vol` get/set Mac OS X sound volume
+- `locatemd` search with Mac OS X Spotlight
+- `lst` ls tree-style
 
 ## Example zshrc ##
     source /your/dotfiles/zshuery/zshuery.sh
