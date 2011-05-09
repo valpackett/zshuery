@@ -46,16 +46,16 @@ load_defaults() {
 }
 
 # Plug and play
-if [ -f /etc/zsh_command_not_found ]; then
+if [[ -f /etc/zsh_command_not_found ]]; then
     source /etc/zsh_command_not_found # installed in Ubuntu
 fi
-if [ -x `which hub` ]; then
+if [[ -x `which hub` ]]; then
     eval $(hub alias -s zsh)
 fi
-if [ -d /var/lib/gems/1.8/bin ]; then # oh Debian/Ubuntu
+if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
-if [ -s $HOME/.rvm/scripts/rvm ]; then
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
     source $HOME/.rvm/scripts/rvm
     RUBY_VERSION_PREFIX='r'
     ruby_version() {
@@ -137,7 +137,7 @@ if [[ $IS_MAC -eq 1 ]]; then
     }
     locatemd() { mdfind "kMDItemDisplayName == '$@'wc" }
  fi
-if [ -e `which github` ]; then
+if [[ -e `which github` ]]; then
     gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
 fi
 
