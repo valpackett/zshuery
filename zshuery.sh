@@ -52,6 +52,9 @@ fi
 if [[ -x `which hub` ]]; then
     eval $(hub alias -s zsh)
 fi
+if [[ -e `which github` ]]; then
+    gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
+fi
 if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
@@ -137,9 +140,6 @@ if [[ $IS_MAC -eq 1 ]]; then
     }
     locatemd() { mdfind "kMDItemDisplayName == '$@'wc" }
  fi
-if [[ -e `which github` ]]; then
-    gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
-fi
 
 # Aliases
 load_aliases() {
