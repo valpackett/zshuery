@@ -69,6 +69,9 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
 else
     ruby_version() { echo '' }
 fi
+if [ -x /usr/libexec/path_helper ]; then
+	eval `/usr/libexec/path_helper -s` # OS X Lion Terminal.app helper
+fi
 
 # Prompt aliases for readability
 USERNAME='%n'
