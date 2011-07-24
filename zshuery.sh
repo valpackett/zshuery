@@ -70,7 +70,15 @@ else
     ruby_version() { echo '' }
 fi
 if [ -x /usr/libexec/path_helper ]; then
-	eval `/usr/libexec/path_helper -s` # OS X Lion Terminal.app helper
+  eval `/usr/libexec/path_helper -s`
+fi
+# OS X Lion Terminal.app helper
+if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
+  update_terminal_cwd() {
+    printf '\e]7;%s\a' "file://$HOST$(pwd | sed -e 's/ /%20/g')"
+  }
+else
+  update_terminal_cwd() {}
 fi
 
 # Prompt aliases for readability
@@ -79,6 +87,7 @@ HOSTNAME='%m'
 DIR='%~'
 COLLAPSED_DIR() { # by Steve Losh
     echo $(pwd | sed -e "s,^$HOME,~,")
+    local PWD_URL="file://$HOSTNAME${PWD// /%20}"
 }
 
 # Functions

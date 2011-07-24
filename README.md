@@ -15,6 +15,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs. I've go
 - Aliases, including [LOLSPEAK](http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh) ones (loaded separately)
 - Completion for a lot of stuff
 - Correction
+- OS X Lion folder-in-the-title support, just add update_terminal_cwd to your precmd()
 
 ### Functions & aliases ###
 
