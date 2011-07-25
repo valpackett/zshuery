@@ -82,8 +82,8 @@ else
 fi
 
 # Prompt aliases for readability
-USERNAME='%n'
-HOSTNAME='%m'
+USER_NAME='%n'
+HOST_NAME='%m'
 DIR='%~'
 COLLAPSED_DIR() { # by Steve Losh
     echo $(pwd | sed -e "s,^$HOME,~,")
