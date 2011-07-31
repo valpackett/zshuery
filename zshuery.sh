@@ -135,6 +135,8 @@ pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
 sha1() { echo -n $1 | openssl sha1 /dev/stdin }
+sha256() { echo -n $1 | openssl dgst -sha256 /dev/stdin}
+sha512() { echo -n $1 | openssl dgst -sha512 /dev/stdin}
 if [[ $HAS_BREW -eq 1 ]]; then
     gimme() { brew install $1 }
     _gimme() { reply=(`brew search`) }
@@ -151,7 +153,7 @@ if [[ $IS_MAC -eq 1 ]]; then
         fi
     }
     locatemd() { mdfind "kMDItemDisplayName == '$@'wc" }
- fi
+fi
 
 # Aliases
 load_aliases() {
