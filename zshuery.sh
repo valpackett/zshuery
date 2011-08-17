@@ -52,9 +52,6 @@ fi
 if [[ -x `which hub` ]]; then
     eval $(hub alias -s zsh)
 fi
-if [[ -e `which github` ]]; then
-    gho() { github open `git remote -v | sed -n '/github.com/p' | head -1 | sed 's/.git .*//;s/.*github.com[:\/]//'` }
-fi
 if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
@@ -65,6 +62,12 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
         if [[ $RUBY_VERSION != "" ]]; then
             echo $RUBY_VERSION_PREFIX$RUBY_VERSION | sed s/ruby-//
         else echo ''; fi
+    }
+elif [[ -d $HOME/.rbenv ]]; then
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval `rbenv init -`
+    ruby_version() {
+        echo `rbenv version-name`
     }
 else
     ruby_version() { echo '' }
@@ -87,7 +90,7 @@ HOST_NAME='%m'
 DIR='%~'
 COLLAPSED_DIR() { # by Steve Losh
     echo $(pwd | sed -e "s,^$HOME,~,")
-    local PWD_URL="file://$HOSTNAME${PWD// /%20}"
+    local PWD_URL="file://$HOST_NAME${PWD// /%20}"
 }
 
 # Functions
@@ -130,7 +133,6 @@ ex() {
     fi
 }
 mcd() { mkdir -p "$1" && cd "$1"; }
-pman() { man $1 -t | open -f -a Preview } # open man pages in OS X Preview
 pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
@@ -146,6 +148,7 @@ elif [[ $HAS_YUM -eq 1 ]]; then
     gimme() { su -c 'yum install $1' }
 fi
 if [[ $IS_MAC -eq 1 ]]; then
+    pman() { man $1 -t | open -f -a Preview } # open man pages in Preview
     cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
     vol() {
         if [[ -n $1 ]]; then osascript -e "set volume output volume $1"
@@ -193,6 +196,7 @@ load_lol_aliases() {
 # Completion
 _fab() { reply=(`fab --shortlist`) }
 _teamocil() { reply=(`ls ~/.teamocil | sed 's/.yml//'`) }
+_rbenv() { reply=(`rbenv commands`) }
 _cap_does_task_list_need_generating() {
   if [ ! -f .cap_tasks~ ]; then return 0;
   else
@@ -222,6 +226,7 @@ load_completion() { # thanks to Oh My Zsh and the internets
     compctl -K _fab fab
     compctl -K _teamocil teamocil
     compctl -K _cap cap
+    compctl -K _rbenv rbenv
     if [[ $HAS_BREW -eq 1 ]]; then
         compctl -K _gimme gimme
     fi
