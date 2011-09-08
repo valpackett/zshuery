@@ -8,7 +8,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 
 - Checks: variables `IS_MAC`, `IS_LINUX`, `HAS_BREW`, `HAS_APT`, `HAS_YUM` for your if statements
 - Some common defaults
-- **Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, [rvm](http://rvm.beginrescueend.com), [rbenv](https://github.com/sstephenson/rbenv)**
+- **Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, [rvm](http://rvm.beginrescueend.com), [rbenv](https://github.com/sstephenson/rbenv), [jump](https://github.com/afriggeri/jump)**
 - Prompt setting aliases (for better readability) and "prompts" command which just sets both left and right prompts
 - Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise), rvm/rbenv ruby version
 - Aliases, including [LOLSPEAK](http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh) ones (loaded separately)

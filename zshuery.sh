@@ -52,6 +52,12 @@ fi
 if [[ -x `which hub` ]]; then
     eval $(hub alias -s zsh)
 fi
+if [[ -x `which jump` ]]; then
+    jump() {
+        cd $(JUMPPROFILE=1 command jump $@)
+    }
+    alias j="jump -a"
+fi
 if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
@@ -64,8 +70,9 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
         else echo ''; fi
     }
 elif [[ -d $HOME/.rbenv ]]; then
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval `rbenv init -`
+    export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
+    source $HOME/.rbenv/completions/rbenv.zsh
+    rbenv rehash 2>/dev/null
     ruby_version() {
         echo `rbenv version-name`
     }
@@ -196,7 +203,6 @@ load_lol_aliases() {
 # Completion
 _fab() { reply=(`fab --shortlist`) }
 _teamocil() { reply=(`ls ~/.teamocil | sed 's/.yml//'`) }
-_rbenv() { reply=(`rbenv commands`) }
 _cap_does_task_list_need_generating() {
   if [ ! -f .cap_tasks~ ]; then return 0;
   else
@@ -226,7 +232,6 @@ load_completion() { # thanks to Oh My Zsh and the internets
     compctl -K _fab fab
     compctl -K _teamocil teamocil
     compctl -K _cap cap
-    compctl -K _rbenv rbenv
     if [[ $HAS_BREW -eq 1 ]]; then
         compctl -K _gimme gimme
     fi
