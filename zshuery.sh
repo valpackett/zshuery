@@ -6,6 +6,7 @@ if [[ $(uname) = 'Linux' ]]; then
 fi
 if [[ $(uname) = 'Darwin' ]]; then
     IS_MAC=1
+    export __CF_USER_TEXT_ENCODING=0x1F5:0x8000100:0x8000100
 fi
 if [[ -x `which brew` ]]; then
     HAS_BREW=1
@@ -163,6 +164,12 @@ if [[ $IS_MAC -eq 1 ]]; then
         fi
     }
     locatemd() { mdfind "kMDItemDisplayName == '$@'wc" }
+    mailapp() {
+        if [[ -n $1 ]]; then msg=$1
+        else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
+        fi
+        osascript -e 'tell application "Mail" to make new outgoing message with properties { Content: "'$msg'", visible: true }' -e 'tell application "Mail" to activate'
+    }
 fi
 
 # Aliases
