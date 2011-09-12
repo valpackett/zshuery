@@ -45,22 +45,23 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 
 ## Example zshrc
 ```sh
-    source $yourdotfiles/zshuery/zshuery.sh
-    load_defaults
-    load_aliases
-    load_lol_aliases
-    load_completion $yourdotfiles/zshuery/completion
-    load_correction
+source $yourdotfiles/zshuery/zshuery.sh
+load_defaults
+load_aliases
+load_lol_aliases
+load_completion $yourdotfiles/zshuery/completion
+load_correction
 
-    prompts '%{$fg_bold[green]%}$(COLLAPSED_DIR)%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} ' '%{$fg[red]%}$(ruby_version)%{$reset_color%}'
+prompts '%{$fg_bold[green]%}$(COLLAPSED_DIR)%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} ' '%{$fg[red]%}$(ruby_version)%{$reset_color%}'
 
-    if [[ $IS_MAC -eq 1 ]]; then
-        export EDITOR='mvim'
-    else
-        export EDITOR='vim'
-    fi
+if [[ $IS_MAC -eq 1 ]]; then
+    export EDITOR='mvim'
+else
+    export EDITOR='vim'
+fi
 
-    precmd() {
-        update_terminal_cwd
-        return 0;
-    }```
+precmd() {
+    update_terminal_cwd
+    return 0;
+}
+```
