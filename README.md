@@ -38,7 +38,8 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `oo` open current dir in Finder
 - `cdf` cd to the current path of the frontmost Finder window
 - `pman` open man pages in Preview
-- `mailapp` creates a message in mail.app from the first arg as a string or stdin if there are no args (eg. you can pipe stuff into it)
+- `mailapp` creates a message in Mail.app from the first arg as a string or stdin if there are no args (eg. you can pipe stuff into it)
+- `evernote` same with a note in Evernote.app
 
 ## Example zshrc ##
 

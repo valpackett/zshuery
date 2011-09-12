@@ -170,6 +170,12 @@ if [[ $IS_MAC -eq 1 ]]; then
         fi
         osascript -e 'tell application "Mail" to make new outgoing message with properties { Content: "'$msg'", visible: true }' -e 'tell application "Mail" to activate'
     }
+    evernote() {
+        if [[ -n $1 ]]; then msg=$1
+        else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
+        fi
+        osascript -e 'tell application "Evernote" to open note window with (create note with text "'$msg'")' -e 'tell application "Evernote" to activate'
+    }
 fi
 
 # Aliases
