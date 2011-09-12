@@ -181,9 +181,12 @@ fi
 # Aliases
 load_aliases() {
     alias ..='cd ..'
-    alias oo='open .' # open current dir in OS X Finder
+    alias ....='cd ../..'
     alias la='ls -la'
-    alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
+    if [[ $IS_MAC -eq 1 ]]; then
+        alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
+        alias oo='open .' # open current dir in OS X Finder
+    fi
     alias clr='clear'
     alias s_http='python -m SimpleHTTPServer' # serve current folder via HTTP
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025' # SMTP test server, outputs to console
