@@ -1,10 +1,10 @@
-# zshuery #
-jQuery did this for JS, we're doing it for zsh. Simplest zsh configuration framework ever. Based on the "Explicit is better than implicit" paradigm (?) from the Zen of Python, so (almost) nothing gets loaded when you source the file.
+# zshuery
+jQuery did this for JS, we're doing it for zsh. Simplest zsh configuration framework ever. Based on the "Explicit is better than implicit" paradigm (is it one?) from the Zen of Python, so (almost) nothing gets loaded when you source the file.
 
-# What's wrong with [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)? ##
+## What's wrong with [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)?
 It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't worry, I have an SSD now!). I've got tired of it and made my own framework. You're looking at it now :)
 
-## What's inside? ##
+## What's inside?
 
 - Checks: variables `IS_MAC`, `IS_LINUX`, `HAS_BREW`, `HAS_APT`, `HAS_YUM` for your if statements
 - Some common defaults
@@ -16,11 +16,13 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - Correction
 - OS X Lion folder-in-the-title support, just add `update_terminal_cwd` to your precmd()
 
-### Functions & aliases ###
+### Functions & aliases
 
 - `last_modified` pretty self-explanatory
 - `ex` extract archives
 - `mcd` mkdir + cd
+- `..`, `....` cd-ing .. and ../..
+- `beep`
 - `pj` pretty-print JSON
 - `cj` curl and pretty-print JSON
 - `md5`, `sha1` of a string
@@ -30,7 +32,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `s_smtp` launch an SMTP test server for development, on port 1025
 - `lst` ls tree-style
 
-#### For OS X only ####
+#### For OS X only
 
 - `vol` get/set sound volume
 - `locatemd` search with Spotlight
@@ -41,8 +43,8 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `mailapp` creates a message in Mail.app from the first arg as a string or stdin if there are no args (eg. you can pipe stuff into it)
 - `evernote` same with a note in Evernote.app
 
-## Example zshrc ##
-
+## Example zshrc
+```sh
     source $yourdotfiles/zshuery/zshuery.sh
     load_defaults
     load_aliases
@@ -52,11 +54,13 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 
     prompts '%{$fg_bold[green]%}$(COLLAPSED_DIR)%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} ' '%{$fg[red]%}$(ruby_version)%{$reset_color%}'
 
-    if [[ $IS_LINUX -eq 1 ]]; then
-        export EDITOR='gvim'
-    elif [[ $IS_MAC -eq 1 ]]; then
+    if [[ $IS_MAC -eq 1 ]]; then
         export EDITOR='mvim'
     else
         export EDITOR='vim'
     fi
 
+    precmd() {
+        update_terminal_cwd
+        return 0;
+    }```
