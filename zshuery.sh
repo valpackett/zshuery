@@ -145,8 +145,10 @@ pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
 sha1() { echo -n $1 | openssl sha1 /dev/stdin }
-sha256() { echo -n $1 | openssl dgst -sha256 /dev/stdin}
-sha512() { echo -n $1 | openssl dgst -sha512 /dev/stdin}
+sha256() { echo -n $1 | openssl dgst -sha256 /dev/stdin }
+sha512() { echo -n $1 | openssl dgst -sha512 /dev/stdin }
+rot13() { echo $1 | tr "A-Za-z" "N-ZA-Mn-za-m" }
+rot47() { echo $1 | tr "\!-~" "P-~\!-O" }
 if [[ $HAS_BREW -eq 1 ]]; then
     gimme() { brew install $1 }
     _gimme() { reply=(`brew search`) }
@@ -194,8 +196,6 @@ load_aliases() {
     alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info' # install a Python package
     alias beep='echo -n "\a"'
     alias lst="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
-    alias rot13='tr "A-Za-z" "N-ZA-Mn-za-m"'
-    alias rot47='tr "\!-~" "P-~\!-O"'
 }
 load_lol_aliases() {
     # Source: http://aur.archlinux.org/packages/lolbash/lolbash/lolbash.sh
