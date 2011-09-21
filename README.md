@@ -31,6 +31,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `s_http` serve current folder via http
 - `s_smtp` launch an SMTP test server for development, on port 1025
 - `lst` ls tree-style
+- `rot13` and `rot47`
 
 #### For OS X only
 
