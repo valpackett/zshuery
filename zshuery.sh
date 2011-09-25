@@ -62,6 +62,7 @@ fi
 if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
+# RVM or rbenv
 if [[ -s $HOME/.rvm/scripts/rvm ]]; then
     source $HOME/.rvm/scripts/rvm
     RUBY_VERSION_PREFIX='r'
@@ -81,17 +82,23 @@ else
     ruby_version() { echo '' }
 fi
 if [ -x /usr/libexec/path_helper ]; then
-  eval `/usr/libexec/path_helper -s`
+    eval `/usr/libexec/path_helper -s`
 fi
-# OS X Lion Terminal.app helper
+# Current directory in title
 if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
-  update_terminal_cwd() {
-    printf '\e]7;%s\a' "file://$HOST$(pwd | sed -e 's/ /%20/g')"
-  }
+    update_terminal_cwd() {
+        printf '\e]7;%s\a' "file://$HOST$(pwd | sed -e 's/ /%20/g')"
+    }
 else
-  update_terminal_cwd() {}
+    case $TERM in
+        sun-cmd)
+            update_terminal_cwd() { print -Pn "\e]l%~\e\\" };;
+        *xterm*|rxvt|(dt|k|E)term)
+            update_terminal_cwd() { print -Pn "\e]2;%~\a" };;
+        *)
+            update_terminal_cwd() {};;
+    esac
 fi
-
 # Prompt aliases for readability
 USER_NAME='%n'
 HOST_NAME='%m'
@@ -251,8 +258,6 @@ load_completion() {
     zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG):ogg\ files *(-/):directories'
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
     zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
-    bindkey '^J' reverse-menu-complete
-    bindkey '^H' menu-complete
 }
 
 # Correction
