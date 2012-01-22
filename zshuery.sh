@@ -160,6 +160,19 @@ rot13() { echo $1 | tr "A-Za-z" "N-ZA-Mn-za-m" }
 rot47() { echo $1 | tr "\!-~" "P-~\!-O" }
 urlencode() { python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])" $1 }
 urldecode() { python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])" $1 }
+up() { # https://gist.github.com/1474072
+    if [ "$1" != "" -a "$2" != "" ]; then
+        local DIR=$1
+        local TARGET=$2
+    elif [ "$1" ]; then
+        local DIR=$PWD
+        local TARGET=$1
+    fi
+    while [ ! -e $DIR/$TARGET -a $DIR != "/" ]; do
+        DIR=$(dirname $DIR)
+    done
+    test $DIR != "/" && echo $DIR/$TARGET
+}
 if [[ $HAS_BREW -eq 1 ]]; then
     gimme() { brew install $1 }
     _gimme() { reply=(`brew search`) }
