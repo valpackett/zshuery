@@ -22,13 +22,14 @@ fi
 autoload colors; colors;
 load_defaults() {
     setopt auto_name_dirs
-    setopt auto_pushd
     setopt pushd_ignore_dups
     setopt prompt_subst
     setopt no_beep
     setopt auto_cd
     setopt multios
     setopt cdablevarS
+    setopt transient_rprompt
+    setopt extended_glob
     autoload -U url-quote-magic
     zle -N self-insert url-quote-magic
     autoload -U zmv
@@ -37,6 +38,7 @@ load_defaults() {
     HISTSIZE=10000
     SAVEHIST=10000
     setopt hist_ignore_dups
+    setopt hist_reduce_blanks
     setopt share_history
     setopt append_history
     setopt hist_verify
@@ -237,6 +239,7 @@ load_completion() {
     compinit -i
     zmodload -i zsh/complist
     setopt complete_in_word
+    setopt auto_remove_slash
     unsetopt always_to_end
     if [[ $HAS_BREW -eq 1 ]]; then
         compctl -K _gimme gimme
@@ -251,15 +254,19 @@ load_completion() {
     zstyle -e ':completion:*' list-colors 'if [[ $words[1] != kill && $words[1] != strace ]]; then reply=( "'$highlights'" ); else reply=( "'$highlights2'" ); fi'
     unset highlights
     zstyle ':completion:*' completer _complete _match _approximate
+    zstyle ':completion:*' squeeze-slashes true
+    zstyle ':completion:*' expand 'yes'
     zstyle ':completion:*:match:*' original only
     zstyle ':completion:*:approximate:*' max-errors 1 numeric
     zstyle ':completion:*:hosts' hosts $hosts
     zstyle ':completion::complete:*' use-cache 1
     zstyle ':completion::complete:*' cache-path ./cache/
-    zstyle ':completion:*:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
-    zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG):ogg\ files *(-/):directories'
-    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-    zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
+    zstyle ':completion:*:cd:*' ignore-parents parent pwd
+    zstyle ':completion:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
+    zstyle ':completion:*:ogg123:*' file-patterns '*.(ogg|OGG):ogg\ files *(-/):directories'
+    zstyle ':completion:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+    zstyle ':completion:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
+
 }
 
 # Correction
