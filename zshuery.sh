@@ -195,11 +195,42 @@ if [[ $IS_MAC -eq 1 ]]; then
         fi
         osascript -e 'tell application "Mail" to make new outgoing message with properties { Content: "'$msg'", visible: true }' -e 'tell application "Mail" to activate'
     }
+    sparrow() {
+        if [[ -n $1 ]]; then msg=$1
+        else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
+        fi
+        osascript -e 'tell application "Sparrow" to compose (make new outgoing message with properties { content: "'$msg'" })' -e 'tell application "Sparrow" to activate'
+    }
     evernote() {
         if [[ -n $1 ]]; then msg=$1
         else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
         fi
         osascript -e 'tell application "Evernote" to open note window with (create note with text "'$msg'")' -e 'tell application "Evernote" to activate'
+    }
+    # http://apple.stackexchange.com/questions/5435/got-any-tips-or-tricks-for-terminal-in-mac-os-x?page=2&tab=votes#tab-top
+    quit() {
+        for app in $*; do
+            osascript -e 'quit app "'$app'"'
+        done
+    }
+    relaunch() {
+        for app in $*; do
+            osascript -e 'quit app "'$app'"';
+            sleep 2;
+            open -a $app
+        done
+    }
+    selected() {
+      osascript <<EOT
+        tell application "Finder"
+          set theFiles to selection
+          set theList to ""
+          repeat with aFile in theFiles
+            set theList to theList & POSIX path of (aFile as alias) & "\n"
+          end repeat
+          theList
+        end tell
+EOT
     }
 fi
 

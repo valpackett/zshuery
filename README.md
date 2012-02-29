@@ -42,7 +42,10 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `cdf` cd to the current path of the frontmost Finder window
 - `pman` open man pages in Preview
 - `mailapp` creates a message in Mail.app from the first arg as a string or stdin if there are no args (eg. you can pipe stuff into it)
+- `sparrow` same for Sparrow.app
 - `evernote` same with a note in Evernote.app
+- `quit`, `relaunch` OS X GUI apps
+- `selected` Finder items
 
 ## Example zshrc
 ```sh
