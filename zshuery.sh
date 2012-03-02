@@ -76,14 +76,9 @@ elif [[ -d $HOME/.rbenv ]]; then
     export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
     source $HOME/.rbenv/completions/rbenv.zsh
     rbenv rehash 2>/dev/null
-    ruby_version() {
-        echo `rbenv version-name`
-    }
+    ruby_version() { rbenv version-name }
 else
     ruby_version() { echo '' }
-fi
-if [ -x /usr/libexec/path_helper ]; then
-    eval `/usr/libexec/path_helper -s`
 fi
 # Current directory in title
 if [[ $TERM_PROGRAM == "Apple_Terminal" ]]; then
