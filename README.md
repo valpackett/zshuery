@@ -32,6 +32,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `s_smtp` launch an SMTP test server for development, on port 1025
 - `lst` ls tree-style
 - `up` find a file in parent dirs
+- `path` pretty-print $PATH (with colors! yay!)
 
 #### For OS X only
 

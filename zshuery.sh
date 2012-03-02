@@ -159,6 +159,15 @@ rot13() { echo $1 | tr "A-Za-z" "N-ZA-Mn-za-m" }
 rot47() { echo $1 | tr "\!-~" "P-~\!-O" }
 urlencode() { python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])" $1 }
 urldecode() { python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])" $1 }
+path() {
+  echo $PATH | tr ":" "\n" | sort | \
+    awk "{ sub(\"/usr\",   \"$fg_no_bold[green]/usr$reset_color\"); \
+           sub(\"/bin\",   \"$fg_no_bold[blue]/bin$reset_color\"); \
+           sub(\"/opt\",   \"$fg_no_bold[cyan]/opt$reset_color\"); \
+           sub(\"/sbin\",  \"$fg_no_bold[magenta]/sbin$reset_color\"); \
+           sub(\"/local\", \"$fg_no_bold[yellow]/local$reset_color\"); \
+           print }"
+}
 up() { # https://gist.github.com/1474072
     if [ "$1" != "" -a "$2" != "" ]; then
         local DIR=$1
