@@ -52,7 +52,7 @@ if [[ -f /etc/zsh_command_not_found ]]; then
     source /etc/zsh_command_not_found # installed in Ubuntu
 fi
 if [[ -x `which hub` ]]; then
-    eval $(hub alias -s zsh)
+    eval "$(hub alias -s zsh)"
 fi
 if [[ -x `which jump` ]]; then
     jump() {
