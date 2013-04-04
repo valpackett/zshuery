@@ -1,21 +1,20 @@
 # jQuery did this for JS, we're doing it for zsh
 
 # Checks
-if [[ $(uname) = 'Linux' ]]; then
-    IS_LINUX=1
-fi
-if [[ $(uname) = 'Darwin' ]]; then
-    IS_MAC=1
-fi
-if [[ -n ${commands[brew]} ]]; then
-    HAS_BREW=1
-fi
-if [[ -n ${commands[apt-get]} ]]; then
-    HAS_APT=1
-fi
-if [[ -n ${commands[yum]} ]]; then
-    HAS_YUM=1
-fi
+is_mac() { [[ $OSTYPE == darwin* ]] }
+is_freebsd() { [[ $OSTYPE == freebsd* ]] }
+is_linux() { [[ $OSTYPE == linux-gnu ]] }
+
+has_brew() { [[ -n ${commands[brew]} ]] }
+has_apt() { [[ -n ${commands[apt-get]} ]] }
+has_yum() { [[ -n ${commands[yum]} ]] }
+
+# DEPRECATED (!)
+IS_MAC=`is_mac && echo 1 || echo 0`
+IS_LINUX=`is_linux && echo 1 || echo 0`
+HAS_BREW=`has_brew && echo 1 || echo 0`
+HAS_APT=`has_apt && echo 1 || echo 0`
+HAS_YUM=`has_yum && echo 1 || echo 0`
 
 # Settings
 autoload colors; colors;
@@ -178,15 +177,15 @@ up() { # https://gist.github.com/1474072
     done
     test $DIR != "/" && echo $DIR/$TARGET
 }
-if [[ $HAS_BREW -eq 1 ]]; then
+if has_brew; then
     gimme() { brew install $1 }
     _gimme() { reply=(`brew search`) }
-elif [[ $HAS_APT -eq 1 ]]; then
+elif has_apt; then
     gimme() { sudo apt-get install $1 }
-elif [[ $HAS_YUM -eq 1 ]]; then
+elif has_yum; then
     gimme() { su -c 'yum install $1' }
 fi
-if [[ $IS_MAC -eq 1 ]]; then
+if is_mac; then
     pman() { man $1 -t | open -f -a Preview } # open man pages in Preview
     cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
     vol() {
@@ -245,7 +244,7 @@ load_aliases() {
     alias ..='cd ..'
     alias ....='cd ../..'
     alias la='ls -la'
-    if [[ $IS_MAC -eq 1 ]]; then
+    if is_mac; then
         alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
         alias oo='open .' # open current dir in OS X Finder
     fi
@@ -290,9 +289,7 @@ load_completion() {
     setopt complete_in_word
     setopt auto_remove_slash
     unsetopt always_to_end
-    if [[ $HAS_BREW -eq 1 ]]; then
-        compctl -K _gimme gimme
-    fi
+    has_brew && compctl -K _gimme gimme
     [[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' `)
     [[ -f ~/.ssh/config ]] && hosts=($hosts `grep '^Host' ~/.ssh/config | sed s/Host\ // | egrep -v '^\*$'`)
     [[ -f /var/lib/misc/ssh_known_hosts ]] && hosts=($hosts `awk -F "[, ]" '{print $1}' /var/lib/misc/ssh_known_hosts | sort -u`)

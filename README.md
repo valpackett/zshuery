@@ -6,7 +6,7 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 
 ## What's inside?
 
-- Checks: variables `IS_MAC`, `IS_LINUX`, `HAS_BREW`, `HAS_APT`, `HAS_YUM` for your if statements
+- Checks: functions `is_mac`, `is_linux`, `is_freebase`, `has_brew`, `has_apt`, `has_yum` for your if statements (variables like `IS_MAC` are deprecated)
 - Some common defaults
 - **Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, [rvm](http://rvm.beginrescueend.com), [rbenv](https://github.com/sstephenson/rbenv), [jump](https://github.com/afriggeri/jump)**
 - Prompt setting aliases (for better readability) and "prompts" command which just sets both left and right prompts
@@ -59,7 +59,7 @@ load_correction
 
 prompts '%{$fg_bold[green]%}$(COLLAPSED_DIR)%{$reset_color%}$(virtualenv_info) %{$fg[yellow]%}$(prompt_char)%{$reset_color%} ' '%{$fg[red]%}$(ruby_version)%{$reset_color%}'
 
-if [[ $IS_MAC -eq 1 ]]; then
+if is_mac; then
     export EDITOR='mvim'
 else
     export EDITOR='vim'
