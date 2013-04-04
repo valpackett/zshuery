@@ -32,6 +32,7 @@ load_defaults() {
     autoload -U url-quote-magic
     zle -N self-insert url-quote-magic
     autoload -U zmv
+    bindkey -e # emacs/bash like keys
     bindkey "^[m" copy-prev-shell-word
     HISTFILE=$HOME/.zsh_history
     HISTSIZE=10000
