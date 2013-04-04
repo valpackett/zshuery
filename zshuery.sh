@@ -7,13 +7,13 @@ fi
 if [[ $(uname) = 'Darwin' ]]; then
     IS_MAC=1
 fi
-if [[ -x `which brew` ]]; then
+if [[ -n ${commands[brew]} ]]; then
     HAS_BREW=1
 fi
-if [[ -x `which apt-get` ]]; then
+if [[ -n ${commands[apt-get]} ]]; then
     HAS_APT=1
 fi
-if [[ -x `which yum` ]]; then
+if [[ -n ${commands[yum]} ]]; then
     HAS_YUM=1
 fi
 
@@ -51,10 +51,10 @@ load_defaults() {
 if [[ -f /etc/zsh_command_not_found ]]; then
     source /etc/zsh_command_not_found # installed in Ubuntu
 fi
-if [[ -x `which hub` ]]; then
+if [[ -n ${commands[hub]} ]]; then
     function git(){hub $@}
 fi
-if [[ -x `which jump` ]]; then
+if [[ -n ${commands[jump]} ]]; then
     jump() {
         cd $(JUMPPROFILE=1 command jump $@)
     }
