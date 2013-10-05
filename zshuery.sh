@@ -150,7 +150,6 @@ ex() {
     fi
 }
 mcd() { mkdir -p "$1" && cd "$1"; }
-compdef mcd=cd
 pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
@@ -290,6 +289,7 @@ load_completion() {
     # http://www.reddit.com/r/commandline/comments/kbeoe/you_can_make_readline_and_bash_much_more_user/
     # https://wiki.archlinux.org/index.php/Zsh
     autoload -U compinit
+    compdef mcd=cd
     fpath=($* $fpath)
     fignore=(.DS_Store $fignore)
     compinit -i
