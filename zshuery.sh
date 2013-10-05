@@ -114,7 +114,11 @@ prompts() {
 prompt_char() { # by Steve Losh
     git branch >/dev/null 2>/dev/null && echo '±' && return
     hg root >/dev/null 2>/dev/null && echo '☿' && return
-    echo '$'
+    if (( $# == 0 )); then
+      echo '$'
+    else
+      echo $1
+    fi
 }
 virtualenv_info() {
     [ $VIRTUAL_ENV ] && echo ' ('`basename $VIRTUAL_ENV`')'
