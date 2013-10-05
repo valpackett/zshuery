@@ -73,7 +73,9 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
     }
 elif [[ -d $HOME/.rbenv ]]; then
     export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
-    source $HOME/.rbenv/completions/rbenv.zsh
+    if [[ -f $HOME/.rbenv/completions/rbenv.zsh ]]; then
+      source $HOME/.rbenv/completions/rbenv.zsh
+    fi
     rbenv rehash 2>/dev/null
     ruby_version() { rbenv version-name }
 else
@@ -143,6 +145,7 @@ ex() {
     fi
 }
 mcd() { mkdir -p "$1" && cd "$1"; }
+compdef mcd=cd
 pj() { python -mjson.tool } # pretty-print JSON
 cj() { curl -sS $@ | pj } # curl JSON
 md5() { echo -n $1 | openssl md5 /dev/stdin }
