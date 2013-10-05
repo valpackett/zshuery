@@ -289,10 +289,10 @@ load_completion() {
     # http://www.reddit.com/r/commandline/comments/kbeoe/you_can_make_readline_and_bash_much_more_user/
     # https://wiki.archlinux.org/index.php/Zsh
     autoload -U compinit
-    compdef mcd=cd
     fpath=($* $fpath)
     fignore=(.DS_Store $fignore)
     compinit -i
+    compdef mcd=cd
     zmodload -i zsh/complist
     setopt complete_in_word
     setopt auto_remove_slash
