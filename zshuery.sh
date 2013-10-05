@@ -109,6 +109,7 @@ COLLAPSED_DIR() { # by Steve Losh
 prompts() {
     PROMPT=$1
     RPROMPT=$2
+    PS2=$3
 }
 prompt_char() { # by Steve Losh
     git branch >/dev/null 2>/dev/null && echo '±' && return
