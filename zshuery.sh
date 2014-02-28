@@ -114,6 +114,7 @@ prompts() {
 prompt_char() { # by Steve Losh
     git branch >/dev/null 2>/dev/null && echo '±' && return
     hg root >/dev/null 2>/dev/null && echo '☿' && return
+    bzr root >/dev/null 2>/dev/null && echo '↥' && return
     if (( $# == 0 )); then
       echo '$'
     else
