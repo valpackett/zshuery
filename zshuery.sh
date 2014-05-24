@@ -291,6 +291,7 @@ load_completion() {
     # https://wiki.archlinux.org/index.php/Zsh
     autoload -U compinit
     fpath=($* $fpath)
+    has_brew && fpath=("/usr/local/share/zsh/site-functions" $fpath)
     fignore=(.DS_Store $fignore)
     compinit -i
     compdef mcd=cd
@@ -299,6 +300,7 @@ load_completion() {
     setopt auto_remove_slash
     unsetopt always_to_end
     has_brew && compctl -K _gimme gimme
+    [[ -f /usr/local/share/zsh/site-functions/go ]] && source /usr/local/share/zsh/site-functions/go # is not autoloadable from fpath
     [[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' `)
     [[ -f ~/.ssh/config ]] && hosts=($hosts `grep '^Host' ~/.ssh/config | sed s/Host\ // | egrep -v '^\*$'`)
     [[ -f /var/lib/misc/ssh_known_hosts ]] && hosts=($hosts `awk -F "[, ]" '{print $1}' /var/lib/misc/ssh_known_hosts | sort -u`)
@@ -308,7 +310,7 @@ load_completion() {
     highlights2='=(#bi) #([0-9]#) #([^ ]#) #([^ ]#) ##*($PREFIX)*==1;31=1;35=1;33=1;32=}'
     zstyle -e ':completion:*' list-colors 'if [[ $words[1] != kill && $words[1] != strace ]]; then reply=( "'$highlights'" ); else reply=( "'$highlights2'" ); fi'
     unset highlights
-    zstyle ':completion:*' completer _complete _match _approximate
+    # zstyle ':completion:*' completer _complete _match _approximate
     zstyle ':completion:*' squeeze-slashes true
     zstyle ':completion:*' expand 'yes'
     zstyle ':completion:*:match:*' original only
