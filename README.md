@@ -26,7 +26,6 @@ It's a big ass thing which loads a lot of files → pretty slow on HDDs (don't w
 - `pj` pretty-print JSON
 - `cj` curl and pretty-print JSON
 - `md5`, `sha1`, `sha256`, `sha512`, `rot13`, `rot47`, `urldecode`, `urlencode` of a string
-- `gimme` install packages ([Homebrew](http://mxcl.github.com/homebrew/) on Mac OS X, apt/yum on Linux)
 - `pinst` install python package from current dir and remove build, dist and egg-info folders
 - `s_http` serve current folder via http
 - `s_smtp` launch an SMTP test server for development, on port 1025

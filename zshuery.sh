@@ -64,6 +64,10 @@ if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
     export PATH=$PATH:/var/lib/gems/1.8/bin
 fi
 # RVM or rbenv
+export RBENV_ROOT=$HOME/.rbenv
+if [[ -d /usr/local/var/rbenv ]]; then
+    export RBENV_ROOT=/usr/local/var/rbenv
+fi
 if [[ -s $HOME/.rvm/scripts/rvm ]]; then
     source $HOME/.rvm/scripts/rvm
     RUBY_VERSION_PREFIX='r'
@@ -72,12 +76,9 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
             echo $RUBY_VERSION_PREFIX$RUBY_VERSION | sed s/ruby-//
         else echo ''; fi
     }
-elif [[ -d $HOME/.rbenv ]]; then
-    export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH
-    if [[ -f $HOME/.rbenv/completions/rbenv.zsh ]]; then
-      source $HOME/.rbenv/completions/rbenv.zsh
-    fi
-    rbenv rehash 2>/dev/null
+elif [[ -d $RBENV_ROOT ]]; then
+    export PATH=$PATH:$RBENV_ROOT/bin
+    eval "$(rbenv init -)"
     ruby_version() { rbenv version-name }
 else
     ruby_version() { echo '' }
@@ -186,14 +187,6 @@ up() { # https://gist.github.com/1474072
     done
     test $DIR != "/" && echo $DIR/$TARGET
 }
-if has_brew; then
-    gimme() { brew install $1 }
-    _gimme() { reply=(`brew search`) }
-elif has_apt; then
-    gimme() { sudo apt-get install $1 }
-elif has_yum; then
-    gimme() { su -c 'yum install $1' }
-fi
 if is_mac; then
     pman() { man $1 -t | open -f -a Preview } # open man pages in Preview
     cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
