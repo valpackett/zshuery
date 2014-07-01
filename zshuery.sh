@@ -35,6 +35,7 @@ load_defaults() {
     HISTFILE=$HOME/.zsh_history
     HISTSIZE=10000
     SAVEHIST=10000
+    export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>' # Like default, but without / -- ^W must be useful in paths, like it is in vim, bash, tcsh
     setopt hist_ignore_dups
     setopt hist_reduce_blanks
     setopt share_history
@@ -290,8 +291,7 @@ load_completion() {
     # http://www.reddit.com/r/commandline/comments/kbeoe/you_can_make_readline_and_bash_much_more_user/
     # https://wiki.archlinux.org/index.php/Zsh
     autoload -U compinit
-    fpath=($* $fpath)
-    has_brew && fpath=("/usr/local/share/zsh/site-functions" $fpath)
+    fpath=($* "/usr/local/share/zsh/site-functions" $fpath)
     fignore=(.DS_Store $fignore)
     compinit -i
     compdef mcd=cd
