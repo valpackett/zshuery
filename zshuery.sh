@@ -168,10 +168,12 @@ urldecode() { python -c "import sys, urllib as ul; print ul.unquote_plus(sys.arg
 path() {
   echo $PATH | tr ":" "\n" | \
     awk "{ sub(\"/usr\",   \"$fg_no_bold[green]/usr$reset_color\"); \
-           sub(\"/bin\",   \"$fg_no_bold[blue]/bin$reset_color\"); \
-           sub(\"/opt\",   \"$fg_no_bold[cyan]/opt$reset_color\"); \
-           sub(\"/sbin\",  \"$fg_no_bold[magenta]/sbin$reset_color\"); \
+           sub(\"/bin\",   \"$fg_bold[blue]/bin$reset_color\"); \
+           sub(\"/sbin\",  \"$fg_bold[magenta]/sbin$reset_color\"); \
            sub(\"/local\", \"$fg_no_bold[yellow]/local$reset_color\"); \
+           sub(\"/opt\",   \"$fg_no_bold[cyan]/opt$reset_color\"); \
+           sub(\"/Users\", \"$fg_no_bold[red]/Users$reset_color\"); \
+           sub(\"/home\",  \"$fg_no_bold[red]/home$reset_color\"); \
            print }"
 }
 up() { # https://gist.github.com/1474072
@@ -188,7 +190,6 @@ up() { # https://gist.github.com/1474072
     test $DIR != "/" && echo $DIR/$TARGET
 }
 if is_mac; then
-    pman() { man $1 -t | open -f -a Preview } # open man pages in Preview
     cdf() { eval cd "`osascript -e 'tell app "Finder" to return the quoted form of the POSIX path of (target of window 1 as alias)' 2>/dev/null`" }
     vol() {
         if [[ -n $1 ]]; then osascript -e "set volume output volume $1"
@@ -201,12 +202,6 @@ if is_mac; then
         else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
         fi
         osascript -e 'tell application "Mail" to make new outgoing message with properties { Content: "'$msg'", visible: true }' -e 'tell application "Mail" to activate'
-    }
-    sparrow() {
-        if [[ -n $1 ]]; then msg=$1
-        else msg=$(cat | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g')
-        fi
-        osascript -e 'tell application "Sparrow" to compose (make new outgoing message with properties { content: "'$msg'" })' -e 'tell application "Sparrow" to activate'
     }
     evernote() {
         if [[ -n $1 ]]; then msg=$1
@@ -244,13 +239,11 @@ fi
 # Aliases
 load_aliases() {
     alias ..='cd ..'
-    alias ....='cd ../..'
     alias la='ls -la'
     if is_mac; then
         alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
         alias oo='open .' # open current dir in OS X Finder
     fi
-    alias clr='clear'
     alias s_http='python -m SimpleHTTPServer' # serve current folder via HTTP
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025' # SMTP test server, outputs to console
     alias wget='wget --no-check-certificate'
@@ -290,9 +283,7 @@ load_completion() {
     compdef mcd=cd
     zmodload -i zsh/complist
     setopt complete_in_word
-    setopt auto_remove_slash
     unsetopt always_to_end
-    has_brew && compctl -K _gimme gimme
     [[ -f /usr/local/share/zsh/site-functions/go ]] && source /usr/local/share/zsh/site-functions/go # is not autoloadable from fpath
     [[ -f ~/.ssh/known_hosts ]] && hosts=(`awk '{print $1}' ~/.ssh/known_hosts | tr ',' '\n' `)
     [[ -f ~/.ssh/config ]] && hosts=($hosts `grep '^Host' ~/.ssh/config | sed s/Host\ // | egrep -v '^\*$'`)
@@ -316,7 +307,6 @@ load_completion() {
     zstyle ':completion:*:ogg123:*' file-patterns '*.(ogg|OGG):ogg\ files *(-/):directories'
     zstyle ':completion:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
     zstyle ':completion:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
-
 }
 
 # Correction
