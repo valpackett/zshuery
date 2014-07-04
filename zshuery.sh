@@ -48,9 +48,8 @@ load_defaults() {
 }
 
 # Plug and play
-if [[ -f /etc/zsh_command_not_found ]]; then
-    source /etc/zsh_command_not_found # installed in Ubuntu
-fi
+[[ -e /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found # Debian/Ubuntu (out of the box with zsh)
+[[ -e /usr/share/doc/pkgfile/command-not-found.zsh ]] && source /usr/share/doc/pkgfile/command-not-found.zsh # Arch Linux (install the pkgfile package)
 if [[ -n ${commands[hub]} ]]; then
     function git(){hub $@}
 fi
@@ -60,14 +59,10 @@ if [[ -n ${commands[jump]} ]]; then
     }
     alias j="jump -a"
 fi
-if [[ -d /var/lib/gems/1.8/bin ]]; then # oh Debian/Ubuntu
-    export PATH=$PATH:/var/lib/gems/1.8/bin
-fi
+[[ -d /var/lib/gems/1.8/bin ]] && export PATH=$PATH:/var/lib/gems/1.8/bin # oh Debian/Ubuntu
 # RVM or rbenv
 export RBENV_ROOT=$HOME/.rbenv
-if [[ -d /usr/local/var/rbenv ]]; then
-    export RBENV_ROOT=/usr/local/var/rbenv
-fi
+[[ -d /usr/local/var/rbenv ]] && export RBENV_ROOT=/usr/local/var/rbenv
 if [[ -s $HOME/.rvm/scripts/rvm ]]; then
     source $HOME/.rvm/scripts/rvm
     RUBY_VERSION_PREFIX='r'
