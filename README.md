@@ -11,7 +11,7 @@ It's just a bit too complex for my taste.
 
 - Checks: functions `is_mac`, `is_linux`, `is_freebsd`, `has_brew`, `has_apt`, `has_yum` for your if statements
 - Some common defaults (eg. ^W removes until a `/` like in vim, bash and tcsh)
-- **Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, [rvm](http://rvm.beginrescueend.com), [rbenv](https://github.com/sstephenson/rbenv), [jump](https://github.com/afriggeri/jump)**
+- **Plug&play support for Ubuntu's command-not-found, [hub](http://chriswanstrath.com/hub/), RubyGems on Debian/Ubuntu, [rvm](http://rvm.beginrescueend.com), [rbenv](https://github.com/sstephenson/rbenv)**
 - Prompt setting aliases (for better readability) and "prompts" command which sets both left and right prompts
 - Neat stuff for your prompt: [virtualenv](http://www.virtualenv.org/) info, smart prompt character (by [Steve Losh](http://stevelosh.com). ± when you're in a Git repo, ☿ in a Mercurial repo, $ otherwise), rvm/rbenv ruby version
 - Aliases

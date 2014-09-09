@@ -53,12 +53,6 @@ load_defaults() {
 if [[ -n ${commands[hub]} ]]; then
     function git(){hub $@}
 fi
-if [[ -n ${commands[jump]} ]]; then
-    jump() {
-        cd $(JUMPPROFILE=1 command jump $@)
-    }
-    alias j="jump -a"
-fi
 [[ -d /var/lib/gems/1.8/bin ]] && export PATH=$PATH:/var/lib/gems/1.8/bin # oh Debian/Ubuntu
 # RVM or rbenv
 export RBENV_ROOT=$HOME/.rbenv
@@ -102,10 +96,6 @@ fi
 USER_NAME='%n'
 HOST_NAME='%m'
 DIR='%~'
-COLLAPSED_DIR() { # by Steve Losh
-    echo $(pwd | sed -e "s,^$HOME,~,")
-    local PWD_URL="file://$HOST_NAME${PWD// /%20}"
-}
 
 # Functions
 prompts() {
@@ -248,7 +238,6 @@ load_aliases() {
     alias s_smtp='python -m smtpd -n -c DebuggingServer localhost:1025' # SMTP test server, outputs to console
     alias pinst='sudo python setup.py install && sudo rm -r build && sudo rm -r dist && sudo rm -r *egg-info' # install a Python package
     alias beep='echo -n "\a"'
-    alias lst="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 }
 
 # Completion
