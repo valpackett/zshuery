@@ -1,4 +1,9 @@
-# zshuery
+# DEPRECATED
+
+Sorry, I no longer maintain this project.  
+Copy from my [zshrc](https://github.com/myfreeweb/dotfiles/blob/master/zsh/zshrc) instead :-)
+
+## zshuery
 jQuery did this for JS, we're doing it for zsh.
 A simpler zsh configuration framework.
 Follows the "Explicit is better than implicit" principle from the Zen of Python, so almost nothing gets loaded when you `source` the file.
